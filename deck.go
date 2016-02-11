@@ -127,7 +127,6 @@ func (p *Deck) Discard(card interface{}) bool {
 }
 
 func (p *Deck) DiscardAll(cards *CardStack) bool {
-	length := cards.Length()
 	// validate them first
 	for _, card := range *cards {
 		i := p.Out.IndexOf(card)
