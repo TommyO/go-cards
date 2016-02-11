@@ -1,13 +1,13 @@
-package cards
+package deck
 
 import(
 	"math/rand"
 	"encoding/json"
 )
 
-type CardStack []interface{}
+type CardSet []interface{}
 
-func (p *CardStack) remove(i int) interface{} {
+func (p *CardSet) remove(i int) interface{} {
 	if i < 0 {
 		i += len(*p)
 	}
@@ -25,32 +25,32 @@ func (p *CardStack) remove(i int) interface{} {
 	return out
 }
 
-func (p *CardStack) Reset() *CardStack {
-	p = NewCardStack()
+func (p *CardSet) Reset() *CardSet {
+	p = NewCardSet()
 	return p
 }
 
-func (p *CardStack) Pop() interface{} {
+func (p *CardSet) Pop() interface{} {
 	return p.remove(-1)
 }
 
-func (p *CardStack) Push(card interface{}) {
+func (p *CardSet) Push(card interface{}) {
 	*p = append(*p, card)
 }
 
-func (p *CardStack) Shift() interface{} {
+func (p *CardSet) Shift() interface{} {
 	return p.remove(0)
 }
 
-func (p *CardStack) Unshift(card interface{}) {
-	*p = append(CardStack{ card }, (*p)[:]...)
+func (p *CardSet) Unshift(card interface{}) {
+	*p = append(CardSet{ card }, (*p)[:]...)
 }
 
-func (p *CardStack) Remove(i int) interface{} {
+func (p *CardSet) Remove(i int) interface{} {
 	return p.remove(i)
 }
 
-func (p *CardStack) IndexOf(card interface{}) int {
+func (p *CardSet) IndexOf(card interface{}) int {
 	for i, c := range *p {
 		if c == card {
 			return i
@@ -59,31 +59,31 @@ func (p *CardStack) IndexOf(card interface{}) int {
 	return -1
 }
 
-func (p *CardStack) All() []interface{} {
+func (p *CardSet) All() []interface{} {
 	return (*p)[:]
 }
 
-func (p *CardStack) Length() int {
+func (p *CardSet) Length() int {
 	return len(*p)
 }
 
-func (p *CardStack) Swap (i, j int) {
+func (p *CardSet) Swap (i, j int) {
 	left := (*p)[i]
 	right := (*p)[j]
 	(*p)[j] = left
 	(*p)[i] = right
 }
 
-func NewCardStack() *CardStack {
-	return &CardStack{}
+func NewCardSet() *CardSet {
+	return &CardSet{}
 }
 
 //
 
 type Deck struct {
-	Source     *CardStack
-	Trash      *CardStack
-	Out        *CardStack
+	Source     *CardSet
+	Trash      *CardSet
+	Out        *CardSet
 }
 
 func (p *Deck) Reset(all bool) *Deck {
@@ -126,7 +126,7 @@ func (p *Deck) Discard(card interface{}) bool {
 	return false
 }
 
-func (p *Deck) DiscardAll(cards *CardStack) bool {
+func (p *Deck) DiscardAll(cards *CardSet) bool {
 	// validate them first
 	for _, card := range *cards {
 		i := p.Out.IndexOf(card)
@@ -159,8 +159,8 @@ func (p *Deck) AddCard(card interface{}) *Deck {
 
 func NewDeck() *Deck {
 	return &Deck{
-		Source: NewCardStack(),
-		Trash: NewCardStack(),
-		Out: NewCardStack(),
+		Source: NewCardSet(),
+		Trash: NewCardSet(),
+		Out: NewCardSet(),
 	}
 }
