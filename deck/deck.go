@@ -25,6 +25,10 @@ func (p *CardSet) remove(i int) interface{} {
 	return out
 }
 
+func (p *CardSet) Peek(i int) interface{} {
+	return (*p)[i]
+}
+
 func (p *CardSet) Reset() *CardSet {
 	p = NewCardSet()
 	return p
@@ -141,6 +145,10 @@ func (p *Deck) DiscardAll(cards *CardSet) bool {
 		}
 	}
 	return true
+}
+
+func (p *Deck) Remaining() int {
+	return p.Source.Length()
 }
 
 func (p *Deck) IndexOf(card interface{}) (int, int, int) {
