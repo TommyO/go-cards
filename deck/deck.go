@@ -55,7 +55,7 @@ func (p *CardSet) Remove(i int) interface{} {
 }
 
 func (p *CardSet) IndexOf(card interface{}) int {
-	for i, c := range *p {
+	for i, c := range (*p)[:] {
 		if c == card {
 			return i
 		}
@@ -71,7 +71,7 @@ func (p *CardSet) Length() int {
 	return len(*p)
 }
 
-func (p *CardSet) Swap (i, j int) {
+func (p *CardSet) Swap(i, j int) {
 	left := (*p)[i]
 	right := (*p)[j]
 	(*p)[j] = left
@@ -130,7 +130,7 @@ func (p *Deck) Discard(card interface{}) bool {
 	return false
 }
 
-func (p *Deck) DiscardAll(cards *CardSet) bool {
+func (p *Deck) DiscardSet(cards *CardSet) bool {
 	// validate them first
 	for _, card := range *cards {
 		i := p.Out.IndexOf(card)
