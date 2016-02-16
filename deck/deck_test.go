@@ -19,7 +19,7 @@ var Aces []Card = []Card{ AceOfSpades, AceOfHearts, AceOfDiamonds, AceOfClubs }
 // String
 // Draw       - done
 // Discard    - done
-// DiscardSet
+// DiscardAll
 // Remaining  - done
 // Reset      - done
 // Shuffle
