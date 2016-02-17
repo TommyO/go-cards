@@ -5,9 +5,9 @@ import(
 )
 
 func Example() {
-	cards := Decks(2, 4)
+	cards := NewDecks(2, 4)
 
-	fmt.Println(len(deck))
+	fmt.Println(len(cards))
 
 	// Output: 108
 }

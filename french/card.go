@@ -116,7 +116,7 @@ func NewClubs() []interface{} {
 func NewDecks(count int, jokers int) []interface{} {
 	out := make([]interface{}, 0)
 	for i := 0; i < count; i++ {
-		out = append(out, NewSpades()[:], NewHearts()[:], NewDiamonds()[:], NewClubs()[:])
+		out = append(out, NewSpades()..., NewHearts()..., NewDiamonds()..., NewClubs()...)
 	}
 	for i := 0; i < jokers; i++ {
 		if i % 2 == 0 {
