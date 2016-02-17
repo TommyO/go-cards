@@ -1,7 +1,7 @@
 package french
 
 import(
-	"../"
+	//"../"
 )
 
 type Suit int
