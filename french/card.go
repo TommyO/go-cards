@@ -124,7 +124,7 @@ func NewClubs() []interface{} {
 
 func pushToDeck(deck []interface{}, cards []interface{}, id int, offset int) []interface{} {
 	for j, card := range cards {
-		card.Deck = id
+		card.(Card).Deck = id
 		deck[offset + j] = card
 	}
 	return deck
