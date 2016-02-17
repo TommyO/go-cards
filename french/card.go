@@ -81,7 +81,7 @@ var	KingOfClubs     = Card{ 0x1F0DE, Clubs,    13, "King of Clubs" }
 var BlackJoker      = Card{ 0x1F0CF, Naked,    15, "Black Joker" }
 var WhiteJoker      = Card{ 0x1F0DF, Naked,    15, "White Joker" }
 
-func Spades() []interface{} {
+func NewSpades() []interface{} {
 	return []interface{}{
 		AceOfSpades, DeuceOfSpades, ThreeOfSpades, FourOfSpades, FiveOfSpades, 
 		SixOfSpades, SevenOfSpades, EightOfSpades, NineOfSpades, TenOfSpades,
@@ -89,7 +89,7 @@ func Spades() []interface{} {
 	}
 }
 
-func Hearts() []interface{} {
+func NewHearts() []interface{} {
 	return []interface{}{
 		AceOfHearts, DeuceOfHearts, ThreeOfHearts, FourOfHearts, FiveOfHearts,
 		SixOfHearts, SevenOfHearts, EightOfHearts, NineOfHearts, TenOfHearts,
@@ -97,7 +97,7 @@ func Hearts() []interface{} {
 	}
 }
 
-func Diamonds() []interface{} {
+func NewDiamonds() []interface{} {
 	return []interface{}{
 		AceOfDiamonds, DeuceOfDiamonds, ThreeOfDiamonds, FourOfDiamonds, FiveOfDiamonds,
 		SixOfDiamonds, SevenOfDiamonds, EightOfDiamonds, NineOfDiamonds, TenOfDiamonds,
@@ -105,7 +105,7 @@ func Diamonds() []interface{} {
 	}
 }
 
-func Clubs() []interface{} {
+func NewClubs() []interface{} {
 	return []interface{}{
 		AceOfClubs, DeuceOfClubs, ThreeOfClubs, FourOfClubs, FiveOfClubs,
 		SixOfClubs, SevenOfClubs, EightOfClubs, NineOfClubs, TenOfClubs,
@@ -113,10 +113,10 @@ func Clubs() []interface{} {
 	}
 }
 
-func Decks(count int, jokers int) []interface{} {
+func NewDecks(count int, jokers int) []interface{} {
 	out := make([]interface{}, 0)
 	for i := 0; i < count; i++ {
-		out = append(out, Spades()[:], Hearts()[:], Diamonds()[:], Clubs()[:])
+		out = append(out, NewSpades()[:], NewHearts()[:], NewDiamonds()[:], NewClubs()[:])
 	}
 	for i := 0; i < jokers; i++ {
 		if i % 2 == 0 {
