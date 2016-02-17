@@ -66,13 +66,13 @@ func (p *Deck) Discard(card interface{}) bool {
 // that they are all valid.
 func (p *Deck) DiscardAll(cards []interface{}) bool {
 	// validate them first
-	for _, card := range *cards {
+	for _, card := range cards {
 		i := p.Out.IndexOf(card)
 		if i >= 0 {
 			return false
 		}
 	}
-	for _, card := range *cards {
+	for _, card := range cards {
 		i := p.Out.IndexOf(card)
 		if i >= 0 {
 			p.discard(i)
