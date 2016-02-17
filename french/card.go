@@ -122,13 +122,14 @@ func NewClubs() []interface{} {
 	}
 }
 
-func pushToDeck(deck []interface{}, cards []interface{}, id int, offset int) []interface{} {
-	for j, card := range cards {
+func pushToDeck(deck []interface{}, cards []interface{}, id int, offset int) ([]interface{}, int) {
+	for _, card := range cards {
 		c := card.(Card)
 		c.Deck = id
-		deck[offset + j] = c
+		deck[offset] = c
+		offset++
 	}
-	return deck
+	return deck, offset
 }
 
 // NewDecks builds a new slice with as many decks and jokers requested
@@ -136,18 +137,18 @@ func NewDecks(count int, jokers int) []interface{} {
 	out := make([]interface{}, (count * 52) + jokers)
 	added := 0
 	for i := 0; i < count; i++ {
-		out = pushToDeck(out, NewSpades(), i, added)
-		out = pushToDeck(out, NewHearts(), i, added)
-		out = pushToDeck(out, NewDiamonds(), i, added)
-		out = pushToDeck(out, NewClubs(), i, added)
-		added += 52
+		out, added = pushToDeck(out, NewSpades(), i, added)
+		out, added = pushToDeck(out, NewHearts(), i, added)
+		out, added = pushToDeck(out, NewDiamonds(), i, added)
+		out, added = pushToDeck(out, NewClubs(), i, added)
 	}
 	for i := 0; i < jokers; i++ {
 		if i % 2 == 0 {
-			out[added + i] = BlackJoker
+			out[added] = BlackJoker
 		} else {
-			out[added + i] = WhiteJoker
+			out[added] = WhiteJoker
 		}
+		added++
 	}
 	return out
 }
