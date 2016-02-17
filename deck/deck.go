@@ -97,6 +97,14 @@ func (p *Deck) String() string {
 	return string(out)
 }
 
+// Initialize makes sure all of the slices are ready to go
+func (p *Deck) Initialize() *Deck {
+	p.Source = NewCardSet()
+	p.Trash = NewCardSet()
+	p.Out = NewCardSet()
+	return p
+}
+
 // AddCard introduces a card to the deck by adding it to the bottom of the Source pile.
 // Usually only called while defining a deck before game play.
 func (p *Deck) AddCard(card interface{}) *Deck {
@@ -106,9 +114,5 @@ func (p *Deck) AddCard(card interface{}) *Deck {
 
 // NewDeck initializes a deck and returns an instance.
 func NewDeck() *Deck {
-	return &Deck{
-		Source: NewCardSet(),
-		Trash: NewCardSet(),
-		Out: NewCardSet(),
-	}
+	return new(Deck).Initialize()
 }

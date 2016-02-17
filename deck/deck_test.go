@@ -14,6 +14,7 @@ var AceOfClubs    Card = Card{ "Ace Of Clubs" }
 
 var Aces []Card = []Card{ AceOfSpades, AceOfHearts, AceOfDiamonds, AceOfClubs }
 
+// Initialize
 // AddCard    - done
 // IndexOf    - done
 // String
@@ -31,6 +32,19 @@ func prepDeck(cards []Card) (*Deck, int) {
 		deck.AddCard(card)
 	}
 	return deck, len(*deck.Source)
+}
+
+func TestDeck_Initialize(t *testing.T) {
+	deck := &Deck{}
+	deck.Initialize()
+
+	if deck.Source == nil || deck.Trash == nil || deck.Out == nil {
+		t.Error(
+			"For initializing the needed stacks",
+			"expected 3 non nil values",
+			"got", deck.Source, deck.Trash, deck.Out,
+		)
+	}
 }
 
 func TestDeck_AddCard(t *testing.T) {
