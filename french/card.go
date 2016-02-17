@@ -1,11 +1,14 @@
+// Package french provides a common deck used for playing poker and other traditional card games.
 package french
 
 import(
-	//"../"
+
 )
 
+// Suit defines the standard suits, using ascii hex values for convenience
 type Suit int
-const(
+
+const (
 	Naked Suit = 0
 	Spades     = 0x2660
 	Hearts     = 0x2661
@@ -18,8 +21,10 @@ type Card struct {
 	Suit  Suit
 	Value int
 	Label string
+	Deck  int
 }
 
+// Back is a convenience holder for the ascii card back code
 const Back int = 0x1F0A0
 
 var AceOfSpades     = Card{ 0x1F0A1, Spades,    1, "Ace of Spades" }
@@ -81,6 +86,7 @@ var	KingOfClubs     = Card{ 0x1F0DE, Clubs,    13, "King of Clubs" }
 var BlackJoker      = Card{ 0x1F0CF, Naked,    15, "Black Joker" }
 var WhiteJoker      = Card{ 0x1F0DF, Naked,    15, "White Joker" }
 
+// NewSpades creates a slice of all spades in a standard deck
 func NewSpades() []interface{} {
 	return []interface{}{
 		AceOfSpades, DeuceOfSpades, ThreeOfSpades, FourOfSpades, FiveOfSpades, 
@@ -89,6 +95,7 @@ func NewSpades() []interface{} {
 	}
 }
 
+// NewHearts creates a slice of all hearts in a standard deck
 func NewHearts() []interface{} {
 	return []interface{}{
 		AceOfHearts, DeuceOfHearts, ThreeOfHearts, FourOfHearts, FiveOfHearts,
@@ -97,6 +104,7 @@ func NewHearts() []interface{} {
 	}
 }
 
+// NewDiamonds creates a slice of all diamonds in a standard deck
 func NewDiamonds() []interface{} {
 	return []interface{}{
 		AceOfDiamonds, DeuceOfDiamonds, ThreeOfDiamonds, FourOfDiamonds, FiveOfDiamonds,
@@ -105,6 +113,7 @@ func NewDiamonds() []interface{} {
 	}
 }
 
+// NewClubs creates a slice of all clubs in a standard deck
 func NewClubs() []interface{} {
 	return []interface{}{
 		AceOfClubs, DeuceOfClubs, ThreeOfClubs, FourOfClubs, FiveOfClubs,
@@ -113,19 +122,30 @@ func NewClubs() []interface{} {
 	}
 }
 
+func pushToDeck(deck []interface{}, cards []interface{}, id int, offset int) []interface{} {
+	for j, card := range cards {
+		card.Deck = id
+		deck[offset + j] = card
+	}
+	return deck
+}
+
+// NewDecks builds a new slice with as many decks and jokers requested
 func NewDecks(count int, jokers int) []interface{} {
-	out := make([]interface{}, 0)
+	out := make([]interface{}, (count * 52) + jokers)
+	added := 0
 	for i := 0; i < count; i++ {
-		out = append(out, NewSpades()...)
-		out = append(out, NewHearts()...)
-		out = append(out, NewDiamonds()...)
-		out = append(out, NewClubs()...)
+		out = pushToDeck(out, NewSpades(), i, added)
+		out = pushToDeck(out, NewHearts(), i, added)
+		out = pushToDeck(out, NewDiamonds(), i, added)
+		out = pushToDeck(out, NewClubs(), i, added)
+		added += 52
 	}
 	for i := 0; i < jokers; i++ {
 		if i % 2 == 0 {
-			out = append(out, &BlackJoker)
+			out[added + i] = BlackJoker
 		} else {
-			out = append(out, &WhiteJoker)
+			out[added + i] = WhiteJoker
 		}
 	}
 	return out
